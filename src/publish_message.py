@@ -8,8 +8,6 @@ from google.cloud import pubsub_v1
 project_id = ""
 topic_id = ""
 
-
-
 def getlatlon()-> str:
     a=["-73.98174286,40.71915817", "-73.98508453, 40.74716568", "-73.97333527,40.76407242", "-73.99310303,40.75263214",
 		"-73.98229218,40.75133133", "-73.96527863,40.80104065", "-73.97010803,40.75979996", "-73.99373627,40.74176025", "-73.98544312,	40.73571014",
@@ -35,7 +33,7 @@ def getstore()-> str:
 
 
 
-def publish_messages(project_id: str, topic_id:str, message: dict, service_account_file:str) -> None:
+def publish_messages(project_id: str, topic_id:str, message: dict, service_account_file:str = None) -> None:
     if service_account_file:
         publisher = pubsub_v1.PublisherClient.from_service_account_file(filename=service_account_file)
     else:
@@ -55,7 +53,7 @@ def publish_messages(project_id: str, topic_id:str, message: dict, service_accou
 
 if __name__ == "__main__":
     i = 0
-    for _ in range(1, 10):
+    for _ in range(1, 100):
         i = int(i) + 1
         id = 'id' + str(random.randint(1665586, 8888888))
         vendor_id = random.randint(1, 2)
@@ -93,6 +91,5 @@ if __name__ == "__main__":
         new_dict["googleDistance"]=googleDistance
         new_dict["googleDuration"]=googleDuration
 
-        json_data = json.dumps(new_dict).encode("utf-8")
     
-        publish_messages(project_id, topic_id)
+        publish_messages(project_id, topic_id, new_dict)

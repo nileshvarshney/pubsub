@@ -12,13 +12,9 @@ def create_topic(project_id: str, topic_id:str, service_account_file:str = None)
     topic_path = publisher.topic_path(project=project_id, topic=topic_id)
 
     # check the existance of the topic
-    if not publisher.get_topic(request={"topic": topic_path}):
-        topic  = publisher.create_topic(request={"name": topic_path})
-        print(f"Created topic {topic.name}")
-    else:
-       print(f"Topic :{topic_path} already exists")
+    topic  = publisher.create_topic(request={"name": topic_path})
+    print(f"Created topic {topic.name}")
 
        
 if __name__ == "__main__":
   create_topic(project_id, topic_id)
-  
